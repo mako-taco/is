@@ -1,0 +1,26 @@
+{
+  "name": "is",
+  "version": "0.0.0",
+  "description": "Adds type knowledge to javascript objects",
+  "main": "is.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "should": "~2.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mako-tako/is.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mako-tako/is/issues"
+  },
+  "homepage": "https://github.com/mako-tako/is"
+}
