@@ -37,4 +37,9 @@ array
 object
 function
 NaN
+
+http
+https
+url
+email
 ```

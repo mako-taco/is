@@ -1,4 +1,5 @@
 (function () {
+
 	function Is (obj) {
 		Object.defineProperties(this, {
 			'a': {
@@ -16,9 +17,22 @@
 					return !obj;
 				}
 			},
+			'even': {
+				get: function(){
+					addIs("even", obj);
+					return this;
+				}
+			},
+			'odd': {
+				get: function(){
+					addIs("odd", obj);
+					return this;
+				}
+			},
 			'number': {
 				get: function () {
-					return obj && obj.constructor === Number;
+					addIs("number", obj);
+					return assert(obj);
 				}
 			},
 			'numeric': {
@@ -52,11 +66,6 @@
 					return ~~obj === obj;
 				}
 			},
-			'number': {
-				get: function () {
-					return (obj && obj.constructor === Number) && !obj.is.NaN;
-				}
-			},
 			'array': {
 				get: function () {
  					return obj && obj.constructor === Array;
@@ -85,4 +94,44 @@
 			return new Is(this)
 		}
 	});
+
+	/**
+	 * Adds lists of tests to be run to __is
+	 */
+
+	function addIs(test, obj){
+		obj.__is = obj.__is || [];
+		obj.__is.push(test);
+	}
+
+	/**
+	 * Lists of tests to be run via assert()
+	 */
+
+	var assertations = {
+		"number": function(obj){
+			return (obj && obj.constructor === Number) && !obj.is.NaN;
+		},
+		"even": function(obj){
+			return obj%2==0;
+		},
+		"odd": function(obj){
+			return obj%2==1;
+		}
+	}
+
+	/**
+	 * Takes an __is object and runs its tests LIFO
+	 * till a false is found or all are done
+	 */
+
+	function assert(obj){
+		var tests = obj.__is;
+		var result = true;
+		var i = tests.length;
+		while(i-- && result){
+			result = assertations[tests[i]](obj);
+		}
+		return result;
+	}
 }());
